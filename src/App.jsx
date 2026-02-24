@@ -1,45 +1,45 @@
 import "./App.css";
 
-const WHATSAPP_LINK = "https://wa.me/243000000000"; // <-- change ton numéro
+const WHATSAPP = "https://wa.me/243000000000"; // <-- change ton numéro
 
-function Badge({ children }) {
-  return <span className="badge">{children}</span>;
-}
-
-function Pill({ children }) {
-  return <span className="pill">{children}</span>;
-}
-
-function Card({ title, price, subtitle, items, cta }) {
+function NavLink({ href, children }) {
   return (
-    <div className="card">
-      <div className="cardTop">
+    <a className="navLink" href={href}>
+      {children}
+    </a>
+  );
+}
+
+function Pack({ name, price, desc, bullets, highlight }) {
+  return (
+    <div className={`pack ${highlight ? "pack--highlight" : ""}`}>
+      {highlight && <div className="packTag">Recommandé</div>}
+      <div className="packTop">
         <div>
-          <h3 className="cardTitle">{title}</h3>
-          <p className="cardSub">{subtitle}</p>
+          <div className="packName">{name}</div>
+          <div className="packDesc">{desc}</div>
         </div>
-        <div className="price">
-          <div className="priceMain">{price}</div>
-          <div className="priceHint">par mois</div>
+        <div className="packPrice">
+          <div className="packPriceMain">{price}</div>
+          <div className="packPriceHint">/ mois</div>
         </div>
       </div>
 
-      <ul className="list">
-        {items.map((it, idx) => (
-          <li key={idx} className="listItem">
-            <span className="dot" />
-            {it}
+      <ul className="packList">
+        {bullets.map((b, i) => (
+          <li key={i} className="packItem">
+            <span className="check" /> {b}
           </li>
         ))}
       </ul>
 
       <a
-        className="btn btnPrimary"
-        href={WHATSAPP_LINK}
+        className={`btn ${highlight ? "btnPrimary" : "btnSoft"}`}
+        href={WHATSAPP}
         target="_blank"
         rel="noreferrer"
       >
-        {cta}
+        Démarrer sur WhatsApp
       </a>
     </div>
   );
@@ -49,27 +49,28 @@ export default function App() {
   return (
     <div className="page">
       <div className="bg" aria-hidden="true">
-        <div className="orb orb1" />
-        <div className="orb orb2" />
+        <div className="noise" />
+        <div className="glow glowA" />
+        <div className="glow glowB" />
         <div className="grid" />
       </div>
 
       <header className="header">
         <div className="brand">
-          <div className="logo" />
-          <span>FlowMind</span>
-          <Badge>Afrique</Badge>
+          <span className="mark" />
+          <span className="brandText">FlowMind</span>
+          <span className="chip">Afrique</span>
         </div>
 
         <nav className="nav">
-          <a href="#packs">Packs</a>
-          <a href="#demo">Démo</a>
-          <a href="#faq">FAQ</a>
+          <NavLink href="#packs">Packs</NavLink>
+          <NavLink href="#demo">Démo</NavLink>
+          <NavLink href="#faq">FAQ</NavLink>
         </nav>
 
         <a
-          className="btn btnGhost"
-          href={WHATSAPP_LINK}
+          className="btn btnSoft btnSmall"
+          href={WHATSAPP}
           target="_blank"
           rel="noreferrer"
         >
@@ -80,79 +81,72 @@ export default function App() {
       <main className="main">
         <section className="hero">
           <div className="heroLeft">
-            <div className="heroBadges">
-              <Pill>Automatisation</Pill>
-              <Pill>IA + WhatsApp</Pill>
-              <Pill>Mobile-first</Pill>
+            <div className="kicker">
+              Automatisation IA • WhatsApp-first • Mobile-first
             </div>
 
             <h1 className="h1">
-              L’agence IA qui <span className="grad">automatise</span> ton
-              business.
+              Automatise ton business en Afrique.
+              <span className="h1Sub">Simple. Rapide. Rentable.</span>
             </h1>
 
             <p className="lead">
-              On remplace les tâches répétitives par des systèmes simples :
-              WhatsApp, prise de RDV, relances, factures, reporting… Tu gagnes
-              du temps, tu vends plus.
+              On met en place des systèmes concrets : relances WhatsApp, prise
+              de RDV, réponses automatiques, devis/factures, suivi clients.
+              Objectif : <b>plus de ventes</b> et <b>moins de fatigue</b>.
             </p>
 
-            <div className="heroCtas">
+            <div className="ctaRow">
               <a
                 className="btn btnPrimary"
-                href={WHATSAPP_LINK}
+                href={WHATSAPP}
                 target="_blank"
                 rel="noreferrer"
               >
                 Parler sur WhatsApp
               </a>
-              <a className="btn btnSoft" href="#packs">
+              <a className="btn btnGhost" href="#packs">
                 Voir les packs
               </a>
             </div>
 
-            <div className="trust">
-              <div className="trustItem">
-                <div className="trustN">48h</div>
-                <div className="trustT">mise en place</div>
+            <div className="miniStats">
+              <div className="stat">
+                <div className="statN">48h</div>
+                <div className="statT">mise en place</div>
               </div>
-              <div className="trustItem">
-                <div className="trustN">+30%</div>
-                <div className="trustT">relances & ventes</div>
+              <div className="stat">
+                <div className="statN">+30%</div>
+                <div className="statT">relances</div>
               </div>
-              <div className="trustItem">
-                <div className="trustN">0</div>
-                <div className="trustT">complexité</div>
+              <div className="stat">
+                <div className="statN">0</div>
+                <div className="statT">complexité</div>
               </div>
             </div>
           </div>
 
           <div className="heroRight">
-            <div className="phone">
-              <div className="phoneTop">
-                <div className="cam" />
-                <div className="speaker" />
+            <div className="mock">
+              <div className="mockTop">
+                <div className="dot" />
+                <div className="dot" />
+                <div className="dot" />
               </div>
-              <div className="chat">
-                <div className="msg bot">
-                  Bonjour 👋 Je suis FlowMind. Tu veux automatiser quoi ?
+              <div className="mockBody">
+                <div className="bubble bot">
+                  Bonjour 👋 tu veux automatiser quoi ?
                 </div>
-                <div className="msg user">
-                  Les relances WhatsApp + la prise de RDV.
+                <div className="bubble user">Les relances WhatsApp + RDV</div>
+                <div className="bubble bot">
+                  ✅ Relances auto
+                  <br />
+                  ✅ Prise de RDV
+                  <br />✅ Devis / facture
                 </div>
-                <div className="msg bot">
-                  Parfait. Je peux :
-                  <br />✅ Relancer automatiquement
-                  <br />✅ Prendre RDV
-                  <br />✅ Envoyer devis / facture
-                </div>
-                <div className="msg user">Combien ça coûte ?</div>
-                <div className="msg bot">
-                  On a 3 packs clairs. Tu veux qu’on fasse une démo en 5 minutes
-                  ?
-                </div>
+                <div className="bubble user">Ok, on démarre.</div>
               </div>
-              <div className="phoneBottom">
+              <div className="mockBottom">
                 <div className="inputFake">Écrire un message…</div>
                 <div className="send" />
               </div>
@@ -163,65 +157,58 @@ export default function App() {
         <section id="packs" className="section">
           <div className="sectionHead">
             <h2 className="h2">3 packs clairs</h2>
-            <p className="sub">
-              Pas de blabla. Tu choisis, on installe, tu vends.
-            </p>
+            <p className="sub">Choisis un pack. On installe. Tu vends.</p>
           </div>
 
-          <div className="cards">
-            <Card
-              title="Starter"
-              subtitle="Pour démarrer vite"
+          <div className="packs">
+            <Pack
+              name="Starter"
               price="49€"
-              items={[
+              desc="Pour démarrer vite"
+              bullets={[
                 "1 automatisation (WhatsApp ou email)",
-                "Relances + message d’accueil",
-                "1 page simple (contact + offre)",
+                "Relance + message d’accueil",
+                "1 mini page (offre + contact)",
                 "Support 7 jours",
               ]}
-              cta="Je veux Starter"
             />
-            <div className="card cardFeatured">
-              <div className="featuredTag">Le plus choisi</div>
-              <Card
-                title="Business"
-                subtitle="Pour vendre tous les jours"
-                price="129€"
-                items={[
-                  "3 automatisations (WhatsApp + RDV + relances)",
-                  "Mini CRM (Google Sheets / Notion)",
-                  "Dashboard simple + reporting",
-                  "Support 30 jours",
-                ]}
-                cta="Je veux Business"
-              />
-            </div>
-            <Card
-              title="Scale"
-              subtitle="Pour équipes & volume"
+            <Pack
+              name="Business"
+              price="129€"
+              desc="Pour vendre tous les jours"
+              highlight
+              bullets={[
+                "3 automatisations (WhatsApp + RDV + relances)",
+                "Mini CRM (Sheets/Notion)",
+                "Reporting simple",
+                "Support 30 jours",
+              ]}
+            />
+            <Pack
+              name="Scale"
               price="299€"
-              items={[
+              desc="Pour équipes & volume"
+              bullets={[
                 "Automatisations illimitées",
-                "Intégrations (paiement, stock, ERP)",
+                "Intégrations (paiement / stock)",
                 "Workflows sur mesure",
                 "Support prioritaire",
               ]}
-              cta="Je veux Scale"
             />
           </div>
         </section>
 
         <section id="demo" className="section">
           <div className="demo">
-            <div>
-              <h2 className="h2">Une démo vidéo</h2>
+            <div className="demoText">
+              <h2 className="h2">Démo vidéo</h2>
               <p className="sub">
-                Remplace cette zone par ta vidéo (Loom / YouTube). Le but :
-                montrer en 30 secondes ce que ça fait.
+                Mets ta vidéo Loom/YouTube ici. 30 secondes, concret,
+                avant/après.
               </p>
               <a
                 className="btn btnPrimary"
-                href={WHATSAPP_LINK}
+                href={WHATSAPP}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -229,11 +216,9 @@ export default function App() {
               </a>
             </div>
 
-            <div className="video">
-              <div className="videoInner">
-                <div className="play" />
-                <div className="videoText">Démo FlowMind (placeholder)</div>
-              </div>
+            <div className="demoBox">
+              <div className="play" />
+              <div className="demoHint">Démo FlowMind (placeholder)</div>
             </div>
           </div>
         </section>
@@ -241,24 +226,21 @@ export default function App() {
         <section id="faq" className="section">
           <div className="sectionHead">
             <h2 className="h2">FAQ</h2>
-            <p className="sub">Questions fréquentes</p>
+            <p className="sub">Les questions les plus fréquentes.</p>
           </div>
 
           <div className="faq">
             <details className="qa">
               <summary>Ça marche sur téléphone ?</summary>
-              <p>
-                Oui. On pense mobile-first. Ton client clique WhatsApp et ça
-                vend.
-              </p>
+              <p>Oui. Tout est mobile-first et WhatsApp-first.</p>
             </details>
             <details className="qa">
               <summary>En combien de temps c’est prêt ?</summary>
-              <p>Souvent 48h pour Starter / Business (selon tes infos).</p>
+              <p>Souvent 48h pour Starter/Business (selon tes infos).</p>
             </details>
             <details className="qa">
-              <summary>Vous faites des démos ?</summary>
-              <p>Oui. Sur WhatsApp, rapide et concret.</p>
+              <summary>Je peux payer comment ?</summary>
+              <p>On s’adapte au pays : mobile money / virement / etc.</p>
             </details>
           </div>
         </section>
@@ -267,32 +249,25 @@ export default function App() {
       <footer className="footer">
         <div className="footLeft">
           <div className="brand">
-            <div className="logo" />
-            <span>FlowMind</span>
+            <span className="mark" />
+            <span className="brandText">FlowMind</span>
           </div>
-          <p className="footText">
+          <div className="footText">
             Automatisation IA pour l’Afrique — WhatsApp d’abord.
-          </p>
+          </div>
         </div>
-
         <div className="footRight">
           <a href="#packs">Packs</a>
           <a href="#demo">Démo</a>
           <a href="#faq">FAQ</a>
-          <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+          <a href={WHATSAPP} target="_blank" rel="noreferrer">
             WhatsApp
           </a>
         </div>
       </footer>
 
-      <a
-        className="waFab"
-        href={WHATSAPP_LINK}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="WhatsApp"
-      >
-        <span className="waDot" />
+      <a className="waFab" href={WHATSAPP} target="_blank" rel="noreferrer">
+        <span className="waIcon" />
         WhatsApp
       </a>
     </div>
