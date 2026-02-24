@@ -1,10 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
+import "./App.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+export default function App() {
+  return (
+    <div className="page">
+      <h1>FlowMind</h1>
+      <p>Base clean ✅ Maintenant on redesign.</p>
+      <a
+        className="btn"
+        href="https://wa.me/243000000000"
+        target="_blank"
+        rel="noreferrer"
+      >
+        WhatsApp
+      </a>
+    </div>
+  );
+}
