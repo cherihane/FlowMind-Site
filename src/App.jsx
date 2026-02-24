@@ -88,7 +88,7 @@ export default function App() {
 
             <h1 className="h1">
               L’agence IA qui <span className="grad">automatise</span> ton
-              business en Afrique.
+              business.
             </h1>
 
             <p className="lead">
