@@ -1,4 +1,5 @@
 import "./App.css";
+import { motion } from "framer-motion";
 
 const WHATSAPP = "https://wa.me/243000000000"; // <-- change ton numéro
 
@@ -12,36 +13,46 @@ function NavLink({ href, children }) {
 
 function Pack({ name, price, desc, bullets, highlight }) {
   return (
-    <div className={`pack ${highlight ? "pack--highlight" : ""}`}>
-      {highlight && <div className="packTag">Recommandé</div>}
-      <div className="packTop">
-        <div>
-          <div className="packName">{name}</div>
-          <div className="packDesc">{desc}</div>
+    <motion.div
+      className={`pack ${highlight ? "pack--highlight" : ""}`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }} // Le "delay" crée l'effet cascade
+      whileHover={{ y: -8, transition: { duration: 0.2 } }} // Petit saut au survol
+    >
+      <div className={`pack ${highlight ? "pack--highlight" : ""}`}>
+        {highlight && <div className="packTag">Recommandé</div>}
+        <div className="packTop">
+          <div>
+            <div className="packName">{name}</div>
+            <div className="packDesc">{desc}</div>
+          </div>
+          <div className="packPrice">
+            <div className="packPriceMain">{price}</div>
+            <div className="packPriceHint">/ mois</div>
+          </div>
         </div>
-        <div className="packPrice">
-          <div className="packPriceMain">{price}</div>
-          <div className="packPriceHint">/ mois</div>
-        </div>
+
+        <ul className="packList">
+          {bullets.map((b, i) => (
+            <li key={i} className="packItem">
+              <span className="check" /> {b}
+            </li>
+          ))}
+        </ul>
+
+        <a
+          className={`btn ${highlight ? "btnPrimary" : "btnSoft"}`}
+          href={WHATSAPP}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Démarrer sur WhatsApp
+        </a>
       </div>
-
-      <ul className="packList">
-        {bullets.map((b, i) => (
-          <li key={i} className="packItem">
-            <span className="check" /> {b}
-          </li>
-        ))}
-      </ul>
-
-      <a
-        className={`btn ${highlight ? "btnPrimary" : "btnSoft"}`}
-        href={WHATSAPP}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Démarrer sur WhatsApp
-      </a>
-    </div>
+      {/* Tout ton contenu de Pack actuel ici */}
+    </motion.div>
   );
 }
 
@@ -49,6 +60,7 @@ export default function App() {
   return (
     <div className="page">
       <div className="bg" aria-hidden="true">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/20 blur-[120px] pointer-events-none" />
         <div className="noise" />
         <div className="glow glowA" />
         <div className="glow glowB" />
@@ -79,15 +91,23 @@ export default function App() {
       </header>
 
       <main className="main">
-        <section className="hero">
+        <motion.section
+          className="hero"
+          initial={{ opacity: 0, y: 30 }} // Départ : invisible et un peu plus bas
+          whileInView={{ opacity: 1, y: 0 }} // Arrivée : visible et à sa place
+          viewport={{ once: true }} // Ne s'anime qu'une seule fois
+          transition={{ duration: 0.8, ease: "easeOut" }} // Vitesse de l'animation
+        >
+          {/* Ton contenu actuel reste le même à l'intérieur */}
+
           <div className="heroLeft">
             <div className="kicker">
               Automatisation IA • WhatsApp-first • Mobile-first
             </div>
 
             <h1 className="h1">
-              Automatise ton business en Afrique.
-              <span className="h1Sub">Simple. Rapide. Rentable.</span>
+              L'intelligence <span className="text-gradient">Artificielle</span>{" "}
+              au service de l'Afrique.
             </h1>
 
             <p className="lead">
@@ -152,7 +172,7 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         <section id="packs" className="section">
           <div className="sectionHead">
@@ -161,40 +181,44 @@ export default function App() {
           </div>
 
           <div className="packs">
-            <Pack
-              name="Starter"
-              price="49€"
-              desc="Pour démarrer vite"
-              bullets={[
+            {[
+              {
+              name:"Starter",
+              price:"49€",
+              desc:"Pour démarrer vite",
+              bullets:[
                 "1 automatisation (WhatsApp ou email)",
                 "Relance + message d’accueil",
                 "1 mini page (offre + contact)",
-                "Support 7 jours",
-              ]}
-            />
-            <Pack
-              name="Business"
-              price="129€"
-              desc="Pour vendre tous les jours"
-              highlight
-              bullets={[
+                "Support 7 jours"]
+              },
+              {
+              name:"Business",
+              price:"129€",
+              desc:"Pour vendre tous les jours",
+              bullets:[
                 "3 automatisations (WhatsApp + RDV + relances)",
                 "Mini CRM (Sheets/Notion)",
                 "Reporting simple",
-                "Support 30 jours",
-              ]}
-            />
-            <Pack
-              name="Scale"
-              price="299€"
-              desc="Pour équipes & volume"
-              bullets={[
+                "Support 30 jours",]
+              },
+              {
+              name:"Scale",
+              price:"299€",
+              desc:"Pour équipes & volume",
+              bullets:[
                 "Automatisations illimitées",
                 "Intégrations (paiement / stock)",
                 "Workflows sur mesure",
-                "Support prioritaire",
-              ]}
-            />
+                "Support prioritaire"]
+              }
+            ].map((p, i) => (
+              <Pack 
+              key={i}
+              index={i} // c'est ici qu'on passe l'index
+              {...p} 
+              />
+            ))}
           </div>
         </section>
 
@@ -240,7 +264,7 @@ export default function App() {
             </details>
             <details className="qa">
               <summary>Je peux payer comment ?</summary>
-              <p>On s’adapte au pays : mobile money / virement / etc.</p>
+              <p>Mobile money / virement / etc.</p>
             </details>
           </div>
         </section>

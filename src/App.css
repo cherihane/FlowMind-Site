@@ -1,14 +1,9 @@
 :root {
-  --bg: #070a12;
-  --panel: #0c1124cc;
-  --panel2: #0c112499;
-  --txt: #e9edff;
-  --muted: #b6bedb;
-  --line: #ffffff12;
-  --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
-  --r: 20px;
-  --accent: #7c5cff; /* violet */
-  --accent2: #2de2e6; /* cyan */
+  --bg: #03060b; /* Plus profond que ton bleu actuel */
+  --panel: rgba(13, 17, 28, 0.7);
+  --line: rgba(255, 255, 255, 0.08); /* Bordures plus fines */
+  --accent: #3b82f6; /* Bleu électrique plus moderne */
+  --accent2: #8b5cf6; /* Violet pour le dégradé */
 }
 
 * {
@@ -389,12 +384,14 @@ a {
   margin-top: 18px;
 }
 .pack {
-  position: relative;
-  border-radius: 22px;
+  transition: all 0.3s ease;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--panel), var(--panel2));
-  backdrop-filter: blur(12px);
-  padding: 16px;
+}
+
+.pack:hover {
+  border-color: rgba(124, 92, 255, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(124, 92, 255, 0.15);
 }
 .pack--highlight {
   outline: 1px solid #ffffff1a;
@@ -592,5 +589,43 @@ a {
   .demo {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
+  }
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btnPrimary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Le reflet qui passe sur le bouton toutes les 3 secondes */
+.btnPrimary::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
   }
 }
