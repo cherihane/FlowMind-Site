@@ -1,7 +1,7 @@
 import "./App.css";
 import { motion } from "framer-motion";
 
-const WHATSAPP = "https://wa.me/243000000000"; // <-- change ton numéro
+const WHATSAPP = "https://wa.me/243000000000"; // <-- mets ton vrai numéro
 
 function NavLink({ href, children }) {
   return (
@@ -11,47 +11,45 @@ function NavLink({ href, children }) {
   );
 }
 
-function Pack({ name, price, desc, bullets, highlight }) {
+function Pack({ name, price, desc, bullets, highlight, index }) {
   return (
     <motion.div
       className={`pack ${highlight ? "pack--highlight" : ""}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }} // Le "delay" crée l'effet cascade
-      whileHover={{ y: -8, transition: { duration: 0.2 } }} // Petit saut au survol
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
     >
-      <div className={`pack ${highlight ? "pack--highlight" : ""}`}>
-        {highlight && <div className="packTag">Recommandé</div>}
-        <div className="packTop">
-          <div>
-            <div className="packName">{name}</div>
-            <div className="packDesc">{desc}</div>
-          </div>
-          <div className="packPrice">
-            <div className="packPriceMain">{price}</div>
-            <div className="packPriceHint">/ mois</div>
-          </div>
+      {highlight && <div className="packTag">Recommandé</div>}
+
+      <div className="packTop">
+        <div>
+          <div className="packName">{name}</div>
+          <div className="packDesc">{desc}</div>
         </div>
-
-        <ul className="packList">
-          {bullets.map((b, i) => (
-            <li key={i} className="packItem">
-              <span className="check" /> {b}
-            </li>
-          ))}
-        </ul>
-
-        <a
-          className={`btn ${highlight ? "btnPrimary" : "btnSoft"}`}
-          href={WHATSAPP}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Démarrer sur WhatsApp
-        </a>
+        <div className="packPrice">
+          <div className="packPriceMain">{price}</div>
+          <div className="packPriceHint">/ mois</div>
+        </div>
       </div>
-      {/* Tout ton contenu de Pack actuel ici */}
+
+      <ul className="packList">
+        {bullets.map((b, i) => (
+          <li key={i} className="packItem">
+            <span className="check" /> {b}
+          </li>
+        ))}
+      </ul>
+
+      <a
+        className={`btn ${highlight ? "btnPrimary" : "btnSoft"}`}
+        href={WHATSAPP}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Démarrer sur WhatsApp
+      </a>
     </motion.div>
   );
 }
@@ -60,7 +58,6 @@ export default function App() {
   return (
     <div className="page">
       <div className="bg" aria-hidden="true">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/20 blur-[120px] pointer-events-none" />
         <div className="noise" />
         <div className="glow glowA" />
         <div className="glow glowB" />
@@ -93,13 +90,11 @@ export default function App() {
       <main className="main">
         <motion.section
           className="hero"
-          initial={{ opacity: 0, y: 30 }} // Départ : invisible et un peu plus bas
-          whileInView={{ opacity: 1, y: 0 }} // Arrivée : visible et à sa place
-          viewport={{ once: true }} // Ne s'anime qu'une seule fois
-          transition={{ duration: 0.8, ease: "easeOut" }} // Vitesse de l'animation
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Ton contenu actuel reste le même à l'intérieur */}
-
           <div className="heroLeft">
             <div className="kicker">
               Automatisation IA • WhatsApp-first • Mobile-first
@@ -183,41 +178,41 @@ export default function App() {
           <div className="packs">
             {[
               {
-              name:"Starter",
-              price:"49€",
-              desc:"Pour démarrer vite",
-              bullets:[
-                "1 automatisation (WhatsApp ou email)",
-                "Relance + message d’accueil",
-                "1 mini page (offre + contact)",
-                "Support 7 jours"]
+                name: "Starter",
+                price: "49€",
+                desc: "Pour démarrer vite",
+                bullets: [
+                  "1 automatisation (WhatsApp ou email)",
+                  "Relance + message d’accueil",
+                  "1 mini page (offre + contact)",
+                  "Support 7 jours",
+                ],
               },
               {
-              name:"Business",
-              price:"129€",
-              desc:"Pour vendre tous les jours",
-              bullets:[
-                "3 automatisations (WhatsApp + RDV + relances)",
-                "Mini CRM (Sheets/Notion)",
-                "Reporting simple",
-                "Support 30 jours",]
+                name: "Business",
+                price: "129€",
+                desc: "Pour vendre tous les jours",
+                bullets: [
+                  "3 automatisations (WhatsApp + RDV + relances)",
+                  "Mini CRM (Sheets/Notion)",
+                  "Reporting simple",
+                  "Support 30 jours",
+                ],
+                highlight: true,
               },
               {
-              name:"Scale",
-              price:"299€",
-              desc:"Pour équipes & volume",
-              bullets:[
-                "Automatisations illimitées",
-                "Intégrations (paiement / stock)",
-                "Workflows sur mesure",
-                "Support prioritaire"]
-              }
+                name: "Scale",
+                price: "299€",
+                desc: "Pour équipes & volume",
+                bullets: [
+                  "Automatisations illimitées",
+                  "Intégrations (paiement / stock)",
+                  "Workflows sur mesure",
+                  "Support prioritaire",
+                ],
+              },
             ].map((p, i) => (
-              <Pack 
-              key={i}
-              index={i} // c'est ici qu'on passe l'index
-              {...p} 
-              />
+              <Pack key={i} index={i} {...p} />
             ))}
           </div>
         </section>
